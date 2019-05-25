@@ -64,10 +64,10 @@ class Num(AbstractNum):
             total = Num(0,self.base)
             zeros = [0]
             c = 0
-            for x in range(MAX_SIZE-1+c, -1, -1):
+            for x in range(MAX_SIZE-1, -1+c, -1):
                 result = []
                 result.extend(zeros*c)
-                for y in range (MAX_SIZE-1+c, -1, -1):
+                for y in range (MAX_SIZE-1, -1+c, -1):
                     sum = self.num[y] * other.num[x]
                     if llevo: sum += 1
                     if sum >= self.base:
