@@ -1,10 +1,7 @@
 """
 AUTORES:
 1) Kevin Flores G             
-2) Philippe Gairaud           
-3) Oscar Ruiz V             
-4) Kevin Delgado  
-           
+2) Philippe Gairaud                     
 """
 
 from functools import total_ordering
@@ -20,7 +17,7 @@ class AbstractNum:
     @abstractmethod
     def __mul__(self, other) : pass
     @abstractmethod
-    def __div__(self, other) : pass
+    def __floordiv__(self, other) : pass
     @abstractmethod
     def __sub__(self, other) : pass
     @abstractmethod
@@ -35,6 +32,7 @@ class Num(AbstractNum):
         self.base = b
         self.is_complement = is_comple
         numberList = [int(x) for x in str(digits)]
+        if len(numberList) == 0: numberList = [1]
         self.numDigits = len(numberList)
         if self.numDigits > MAX_SIZE:
             raise Exception("Overflow")
@@ -88,7 +86,7 @@ class Num(AbstractNum):
         else:
             result = []
             llevo = False
-            total = Num(0,self.base)
+            total = type(self)(digits = 0, b = self.base)
             zeros = [0]
             c, carry = 0, 0
             for x in range(MAX_SIZE-1, -1+c, -1):
@@ -109,7 +107,7 @@ class Num(AbstractNum):
                 total = total +  type(self)("".join(str(i) for i in result), self.base)
             return total
 
-    def __div__(self, other):
+    def __floordiv__(self, other):
         if self.base != other.base:
             raise Exception("Different Bases")
         else:
@@ -181,19 +179,38 @@ class Num(AbstractNum):
         return self * type(self)(digits = 10**position, b =self.base)
 
     def __rshift__(self, position):
-        return self.__div__(type(self)(digits = 10**position, b = self.base))
+        return self // type(self)(digits = 10**position, b = self.base)
 
 class Knum(Num):
-    def __add__(self, other):
-        return super().__add__(other)
-   
+    """
+    def __mul__(self, other):
+        # BASE CASE
+        if len(self) <= 1 and len(other) <= 1:  
+            return type(self)(digits = self[1]*other[1], b = self.base)
+        else:
+            # CALCULADING N/2 = NUMER OF DIGITS/2
+            n = len(self) // 2 if len(self) >= len(other) else len(other) // 2
+            #if n % 2 != 0 : n+=1
+            # CALCULADING MIDDLE OF THE KNUMBER's
+            mid_self = MAX_SIZE - len(self) // 2
+            mid_other = MAX_SIZE - len(other) // 2
+            # CREATING NEW KNUMBER's FROM THE PREVIOUS KNUMBER'S 
+            a = type(self)("".join(str(i) for i in self.num[MAX_SIZE-len(self):mid_self]), self.base)
+            b = type(self)("".join(str(i) for i in self.num[mid_self:]), self.base)
+            c = type(other)("".join(str(i) for i in other.num[MAX_SIZE-len(other):mid_other]), other.base)
+            d = type(other)("".join(str(i) for i in other.num[mid_other:]), other.base)
+            # RECURSIVE CALL's (3 MULTIPLICATION's INSTEAD OF 4)
+            ac = a*c
+            bd = b*d
+        return ac + bd
+    """
 if __name__=="__main__":
     
     print("-------- PRUEBAS INICIALES --------\n")
     print("\nSUMAS \n")
     
-    x = 364
-    y = "66"
+    x = 10
+    y = "9"
     base3, base4, base7, base9, base10 = 3, 4, 7, 9, 10
     """ a = Num(x, base10)
     b = Num(y, base10)
@@ -203,10 +220,10 @@ if __name__=="__main__":
     f = Knum(y, base7)
     g = Knum(x, base9)
     h = Knum(y, base9)"""
-    i = Num(x,base10)
-    j = Num(y,base10)
-    b = Num(1122334455667788, base10)
-    c = Num(12345678, base10)
+    i = Knum(x,base10)
+    j = Knum(y,base10)
+    b = Num(123, base10)
+    c = Num(123, base10)
     """  print(f"a = {a}")
     print(f"b = {b}")
     print(f"d = {d}")
@@ -221,4 +238,4 @@ if __name__=="__main__":
     print(f"g+h = {a+b}")
     print(f"i+j = {i+j}")
     print(f"i+j = {i+j}")"""
-    print( i >> 2 )
+    print(i // j)
