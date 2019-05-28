@@ -96,7 +96,7 @@ class Num(AbstractNum):
                     sum = self.num[y] * other.num[x]
                     if llevo: sum += carry 
                     if sum >= self.base:
-                        result.append(sum - self.base * int(str(sum)[0]))
+                        result.append(sum - (self.base * (sum//self.base)))
                         llevo = True
                         carry = sum // 10
                     else:
@@ -209,8 +209,8 @@ if __name__=="__main__":
     print("-------- PRUEBAS INICIALES --------\n")
     print("\nSUMAS \n")
     
-    x = 10
-    y = "9"
+    x = 999
+    y = "32"
     base3, base4, base7, base9, base10 = 3, 4, 7, 9, 10
     """ a = Num(x, base10)
     b = Num(y, base10)
@@ -220,8 +220,8 @@ if __name__=="__main__":
     f = Knum(y, base7)
     g = Knum(x, base9)
     h = Knum(y, base9)"""
-    i = Knum(x,base10)
-    j = Knum(y,base10)
+    i = Num(x,base10)
+    j = Num(y,base10)
     b = Num(123, base10)
     c = Num(123, base10)
     """  print(f"a = {a}")
@@ -236,6 +236,6 @@ if __name__=="__main__":
     print(f"c+d = {a+b}")
     print(f"e+f = {a+b}")
     print(f"g+h = {a+b}")
-    print(f"i+j = {i+j}")
+    print(f"i*j = {i+j}")
     print(f"i+j = {i+j}")"""
-    print(i // j)
+    print(f"i*j = {i+j}")
