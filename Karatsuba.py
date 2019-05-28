@@ -26,6 +26,10 @@ class AbstractNum:
     def __lt__(self, other) : pass
     @abstractmethod
     def __invert__(self) : pass 
+    def numValidator(self,other):
+        if(type(self)!=type(other)):
+            raise Exception(f"Can't operate {self.__class__.__name__} with {other.__class__.__name__}")
+        return True
     
 class Num(AbstractNum):
     def __init__(self, digits = 0, b = Default_base, is_comple = False):
@@ -59,22 +63,23 @@ class Num(AbstractNum):
         return self.num[(MAX_SIZE - 1) - (len(self) - key)]
 
     def __add__(self, other):  
-        if self.base != other.base:
-            raise Exception("Different Bases")
-        else:
-            result, result_num = [], 0
-            llevo = False
-            for x in range(MAX_SIZE-1, -1, -1):
-                sum = self.num[x] + other.num[x]
-                if llevo: sum += 1
-                if sum >= self.base:
-                    result.append(sum - self.base)
-                    llevo = True
-                else:
-                    result.append(sum)
-                    llevo = False
-            for i in range(len(result)): result_num += result[i]*10**i
-            return type(self)(result_num, self.base)
+        if  Num.numValidator(self,other):
+            if self.base != other.base:
+                raise Exception("Different Bases")
+            else:
+                result, result_num = [], 0
+                llevo = False
+                for x in range(MAX_SIZE-1, -1, -1):
+                    sum = self.num[x] + other.num[x]
+                    if llevo: sum += 1
+                    if sum >= self.base:
+                        result.append(sum - self.base)
+                        llevo = True
+                    else:
+                        result.append(sum)
+                        llevo = False
+                for i in range(len(result)): result_num += result[i]*10**i
+                return type(self)(result_num, self.base)
 
     def __mul__(self, other):
         if self.base != other.base:
@@ -92,7 +97,7 @@ class Num(AbstractNum):
                     sum = self.num[y] * other.num[x]
                     if llevo: sum += carry 
                     if sum >= self.base:
-                        result.append(sum - self.base * int(str(sum)[0]))
+                        result.append(sum - (self.base * (sum//10)))
                         llevo = True
                         carry = sum // 10
                     else:
@@ -217,9 +222,10 @@ if __name__=="__main__":
     g = Knum(x, base9)
     h = Knum(y, base9)"""
     i = Knum(x,4)
-    j = Knum(y,4)
+    j = Num(y,4)
     b = Num(123, base10)
     c = Num(123, base10)
+    o = 12
     """  print(f"a = {a}")
     print(f"b = {b}")
     print(f"d = {d}")
