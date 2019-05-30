@@ -153,6 +153,14 @@ class Num(AbstractNum):
             result = self + ~other
             if self < other: result.is_complement = True
             return result
+    
+    def __pow__(self, other):
+        result = type(self)(digits = 0, b = self.base)
+        #exponent = int("".join(str(i) for i in other.num))
+        x = other
+        for i in  range (4-1):
+            result = result*x
+        return result
 
     def __invert__(self):   
         x = [ self.base - 1 - x for x in self.num ]
@@ -218,8 +226,8 @@ if __name__=="__main__":
     print("-------- PRUEBAS INICIALES --------\n")
     print("\nSUMAS \n")
     
-    x = 14
-    y = "35"
+    x = 2
+    y = "4"
     base3, base4, base7, base9, base10 = 3, 4, 7, 9, 10
     """ a = Num(x, base10)
     b = Num(y, base10)
@@ -229,8 +237,8 @@ if __name__=="__main__":
     f = Knum(y, base7)
     g = Knum(x, base9)
     h = Knum(y, base9)"""
-    i = Num(x,4)
-    j = Num(y,4)
+    i = Num(x,10)
+    j = Num(y,10)
     b = Num(123, base10)
     c = Num(123, base10)
     o = 12
@@ -248,4 +256,4 @@ if __name__=="__main__":
     print(f"g+h = {a+b}")
     print(f"i+j = {i+j}")
     print(f"i+j = {i+j}")"""
-    print(i+j)
+    print(i**j)
