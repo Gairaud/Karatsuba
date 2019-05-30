@@ -26,15 +26,18 @@ class AbstractNum:
     def __lt__(self, other) : pass
     @abstractmethod
     def __invert__(self) : pass 
-    def numValidator(self,other):
+    def operateValidator(self,other):
         if(type(self)!=type(other)):
             raise Exception(f"Can't operate {self.__class__.__name__} with {other.__class__.__name__}")
-
-    
+    def creationBase(digits,base):
+        for x in str(digits):
+            if int(x) >= base:
+                raise Exception(f"Can't create a number with a digit of the same value or greater than base {base}")
 class Num(AbstractNum):
     def __init__(self, digits = 0, b = Default_base, is_comple = False):
         self.base = b
         self.is_complement = is_comple
+        Num.creationBase(digits,self.base)
         numberList = [int(x) for x in str(digits)]
         if len(numberList) == 0: numberList = [1]
         self.numDigits = len(numberList)
@@ -63,7 +66,7 @@ class Num(AbstractNum):
         return self.num[(MAX_SIZE - 1) - (len(self) - key)]
 
     def __add__(self, other):  
-        Num.numValidator(self,other)
+        Num.operateValidator(self,other)
         if self.base != other.base:
             raise Exception("Different Bases")
         else:
@@ -82,7 +85,7 @@ class Num(AbstractNum):
             return type(self)(result_num, self.base)
 
     def __mul__(self, other):
-        Num.numValidator(self,other)
+        Num.operateValidator(self,other)
         if self.base != other.base:
             raise Exception("Different Bases")
         else:
@@ -110,7 +113,7 @@ class Num(AbstractNum):
             return total
 
     def __floordiv__(self, other):
-        Num.numValidator(self,other)
+        Num.operateValidator(self,other)
         if self.base != other.base:
             raise Exception("Different Bases")
         else:
@@ -143,7 +146,7 @@ class Num(AbstractNum):
             return  type(self)("".join(str(i) for i in result), self.base) 
         
     def __sub__(self, other):
-        Num.numValidator(self,other)
+        Num.operateValidator(self,other)
         if self.base != other.base:
             raise Exception("Different Bases")
         else:
@@ -158,7 +161,7 @@ class Num(AbstractNum):
         return result
 
     def __eq__(self, other):
-        Num.numValidator(self,other)
+        Num.operateValidator(self,other)
         if self.base != other.base:
             raise Exception("Different Bases")
         for x in range(MAX_SIZE-1,-1,-1):
@@ -166,7 +169,7 @@ class Num(AbstractNum):
         return True
 
     def __lt__(self, other):
-        Num.numValidator(self,other)
+        Num.operateValidator(self,other)
         if self.base != other.base:
             raise Exception("Different Bases")
         if (other.is_complement and not self.is_complement) or self == other: return False
@@ -215,8 +218,8 @@ if __name__=="__main__":
     print("-------- PRUEBAS INICIALES --------\n")
     print("\nSUMAS \n")
     
-    x = 13
-    y = "32"
+    x = 14
+    y = "35"
     base3, base4, base7, base9, base10 = 3, 4, 7, 9, 10
     """ a = Num(x, base10)
     b = Num(y, base10)
@@ -227,7 +230,7 @@ if __name__=="__main__":
     g = Knum(x, base9)
     h = Knum(y, base9)"""
     i = Num(x,4)
-    j = Knum(y,4)
+    j = Nnum(y,4)
     b = Num(123, base10)
     c = Num(123, base10)
     o = 12
