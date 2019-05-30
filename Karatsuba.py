@@ -29,7 +29,7 @@ class AbstractNum:
     def operateValidator(self,other):
         if(type(self)!=type(other)):
             raise Exception(f"Can't operate {self.__class__.__name__} with {other.__class__.__name__}")
-    def creationBase(digits,base):
+    def creationBase(self,digits,base):
         for x in str(digits):
             if int(x) >= base:
                 raise Exception(f"Can't create a number with a digit of the same value or greater than base {base}")
@@ -37,7 +37,7 @@ class Num(AbstractNum):
     def __init__(self, digits = 0, b = Default_base, is_comple = False):
         self.base = b
         self.is_complement = is_comple
-        Num.creationBase(digits,self.base)
+        self.creationBase(digits,self.base)
         numberList = [int(x) for x in str(digits)]
         if len(numberList) == 0: numberList = [1]
         self.numDigits = len(numberList)
