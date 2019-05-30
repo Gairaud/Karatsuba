@@ -248,4 +248,4 @@ if __name__=="__main__":
     print(f"g+h = {a+b}")
     print(f"i+j = {i+j}")
     print(f"i+j = {i+j}")"""
-    print(i*j)
+    print(i+j)
