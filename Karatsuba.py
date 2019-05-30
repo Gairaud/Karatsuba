@@ -230,7 +230,7 @@ if __name__=="__main__":
     g = Knum(x, base9)
     h = Knum(y, base9)"""
     i = Num(x,4)
-    j = Nnum(y,4)
+    j = Num(y,4)
     b = Num(123, base10)
     c = Num(123, base10)
     o = 12
