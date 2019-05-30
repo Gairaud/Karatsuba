@@ -17,6 +17,10 @@ class AbstractNum:
     @abstractmethod
     def __mul__(self, other) : pass
     @abstractmethod
+    def __pow__(self,other): pass
+    @abstractmethod
+    def multbyOneDigit(self,digits): pass
+    @abstractmethod
     def __floordiv__(self, other) : pass
     @abstractmethod
     def __sub__(self, other) : pass
@@ -27,14 +31,33 @@ class AbstractNum:
     @abstractmethod
     def __invert__(self) : pass 
     def operateValidator(self,other):
+        """
+        Raise a exception if the user tries to operate a Num or Knum with
+        others data types of data
+
+        -Example
+            Num + int
+            Num + Knum
+        """
         if(type(self)!=type(other)):
             raise Exception(f"Can't operate {self.__class__.__name__} with {other.__class__.__name__}")
     def creationBase(self,digits,base):
+        """
+        Raise a exception if a number in the digits list is equal or greater
+        than the creation base
+
+        -Example
+            45 in base 4
+            49 in base 8
+        """
         for x in str(digits):
             if int(x) >= base:
                 raise Exception(f"Can't create a number with a digit of the same value or greater than base {base}")
 class Num(AbstractNum):
     def __init__(self, digits = 0, b = Default_base, is_comple = False):
+        """
+        
+        """
         self.base = b
         self.is_complement = is_comple
         self.creationBase(digits,self.base)
@@ -65,7 +88,15 @@ class Num(AbstractNum):
             raise Exception("Overflow")
         return self.num[(MAX_SIZE - 1) - (len(self) - key)]
 
-    def __add__(self, other):  
+    def __add__(self, other):
+        """Returns the sum of two Nums 
+         -Example
+
+        + [1,2,3]
+          [1,2,3]
+        _________
+          [2,4,6]
+        """ 
         Num.operateValidator(self,other)
         if self.base != other.base:
             raise Exception("Different Bases")
@@ -85,6 +116,17 @@ class Num(AbstractNum):
             return type(self)(result_num, self.base)
 
     def __mul__(self, other):
+        """Returns the multiplication of two Nums 
+         -Example
+
+        * [1,3]
+          [4,5]
+        _________
+        + [6,5]
+        [5,2]
+        _________
+        [5,8,5]
+        """ 
         Num.operateValidator(self,other)
         if self.base != other.base:
             raise Exception("Different Bases")
@@ -155,11 +197,15 @@ class Num(AbstractNum):
             return result
     
     def __pow__(self, other):
-        result = type(self)(digits = 0, b = self.base)
-        #exponent = int("".join(str(i) for i in other.num))
-        x = other
-        for i in  range (4-1):
-            result = result*x
+        result = self
+        exponent = int("".join(str(i) for i in other.num))
+        for i in  range (exponent-1):
+            result = result*self
+        return result
+    def multbyOneDigit(self,digit):
+        result = self
+        for i in  range (digit-1):
+            result = result+self
         return result
 
     def __invert__(self):   
@@ -226,8 +272,8 @@ if __name__=="__main__":
     print("-------- PRUEBAS INICIALES --------\n")
     print("\nSUMAS \n")
     
-    x = 2
-    y = "4"
+    x = 9
+    y = "8"
     base3, base4, base7, base9, base10 = 3, 4, 7, 9, 10
     """ a = Num(x, base10)
     b = Num(y, base10)
@@ -257,3 +303,4 @@ if __name__=="__main__":
     print(f"i+j = {i+j}")
     print(f"i+j = {i+j}")"""
     print(i**j)
+    print(i.multbyOneDigit(3))
