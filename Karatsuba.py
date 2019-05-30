@@ -56,7 +56,9 @@ class AbstractNum:
 class Num(AbstractNum):
     def __init__(self, digits = 0, b = Default_base, is_comple = False):
         """
-        
+        Initialize a Num object with digits, base and complement
+        The Num with digits = 345 has the next form 
+        --> [3,4,5] 
         """
         self.base = b
         self.is_complement = is_comple
@@ -188,6 +190,14 @@ class Num(AbstractNum):
             return  type(self)("".join(str(i) for i in result), self.base) 
         
     def __sub__(self, other):
+        """Returns the substarction of two Nums 
+         -Example          -Complement example
+
+        - [1,2,3]             -[1,2,3]
+            [2,3]              [2,0,0]
+        _________            _________
+          [1,0,0]           [..,9,2,3]
+        """ 
         Num.operateValidator(self,other)
         if self.base != other.base:
             raise Exception("Different Bases")
@@ -197,12 +207,22 @@ class Num(AbstractNum):
             return result
     
     def __pow__(self, other):
+        """
+        Raise a Num to the powe of other Num
+        -Example
+            [1,2]**[2]
+        """
         result = self
         exponent = int("".join(str(i) for i in other.num))
         for i in  range (exponent-1):
             result = result*self
         return result
     def multbyOneDigit(self,digit):
+        """
+        Multiply a Num by a int
+        -Example
+        2* [2,3]
+        """
         result = self
         for i in  range (digit-1):
             result = result+self
@@ -272,8 +292,8 @@ if __name__=="__main__":
     print("-------- PRUEBAS INICIALES --------\n")
     print("\nSUMAS \n")
     
-    x = 9
-    y = "8"
+    x = 123
+    y = "200"
     base3, base4, base7, base9, base10 = 3, 4, 7, 9, 10
     """ a = Num(x, base10)
     b = Num(y, base10)
@@ -302,5 +322,5 @@ if __name__=="__main__":
     print(f"g+h = {a+b}")
     print(f"i+j = {i+j}")
     print(f"i+j = {i+j}")"""
-    print(i**j)
+    print(i-j)
     print(i.multbyOneDigit(3))
