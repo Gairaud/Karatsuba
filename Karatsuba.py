@@ -364,16 +364,9 @@ class Knum(Num):
             n = Lself // 2 + Lself % 2 if Lself >= Lother else Lother // 2 + Lother % 2
 
             # MIDDLE OF THE NUMBERS
-            if Lself == Lother:
-                mid_self = MAX_SIZE - Lself + n
-                mid_other = MAX_SIZE - Lother + n
-            elif Lself > Lother:
-                mid_self = MAX_SIZE - Lself + (Lself - n) 
-                mid_other = MAX_SIZE - Lother
-            else: 
-                mid_self = MAX_SIZE - Lself 
-                mid_other = MAX_SIZE - Lother + (Lother - n) 
-
+            mid_self = MAX_SIZE - Lself + (Lself - n)
+            mid_other = MAX_SIZE - Lother + (Lother - n)  
+                
             # CREATING NEW KNUMBER's FROM THE PREVIOUS KNUMBER'S 
             a = type(self)("".join(str(i) for i in self.num[MAX_SIZE-Lself:mid_self]), self.base)
             b = type(self)("".join(str(i) for i in self.num[mid_self:]), self.base)
@@ -390,6 +383,6 @@ class Knum(Num):
 
 if __name__=="__main__":
     
-    i = Knum(1233, 5)
-    j = Knum(143, 5)
+    i = Knum(1234567, 8)
+    j = Knum(123, 8)
     print(i*j)
