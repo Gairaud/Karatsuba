@@ -353,7 +353,7 @@ class Knum(Num):
         if len(self) == 1 and len(other) == 1: 
             return super().__mul__(other)
         else:
-            # Verifying multiplications -> "~Knum * Knum", "Knum * ~Num", "~Knum * ~Knum"
+            # Verifying multiplications -> "~Knum * Knum", "Knum * ~Knum", "~Knum * ~Knum"
             if self.is_complement and not other.is_complement: return ~(~self*other)
             elif not self.is_complement and other.is_complement: return ~(self*~other)
             elif self.is_complement and other.is_complement: return ~self*~other
@@ -390,6 +390,6 @@ class Knum(Num):
 
 if __name__=="__main__":
     
-    i = Knum(12,5)
-    j = Knum("310",5)
+    i = Knum(1233, 5)
+    j = Knum(143, 5)
     print(i*j)
