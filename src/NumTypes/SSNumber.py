@@ -3,12 +3,16 @@ Authors:
 1) Kevin Flores G             
 2) Philippe Gairaud     
 
-Abstract class of Num
+SSNum class
 """
 from NaturalNumber import *
 
 class SSNum(Num):
     def SimpleListSum(self,list1,list2):
+        """
+            Sum two list element per element
+
+        """
         result = []
         SumCounter = len(list1)
         for x in range (SumCounter-1 ,-1, -1):
@@ -17,6 +21,10 @@ class SSNum(Num):
         result = result[::-1]
         return result
     def __mul__(self,other):
+        """
+            Demo implementation of Schönhage–Strassen algorithm
+            ***IMPLEMENTATION CAN BE IMPROVED***
+        """
         if self.base != 10:
             raise Exception("SS is only defined for base 10")
         result = [0]
@@ -32,6 +40,9 @@ class SSNum(Num):
             total = self.SimpleListSum(result[::-1],total)
             c+=1
         def Recombination(self, result):
+            """
+                Products recombination
+            """
             c = 1
             total = type(self)(0,self.base)
             for x in range (MAX_SIZE-1,-1,-1):

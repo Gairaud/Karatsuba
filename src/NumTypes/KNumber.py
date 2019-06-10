@@ -3,7 +3,7 @@ Authors:
 1) Kevin Flores G             
 2) Philippe Gairaud     
 
-Abstract class of Num
+KnumClass
 """
 from NaturalNumber import *
 
